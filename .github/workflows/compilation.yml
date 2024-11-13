@@ -11,14 +11,14 @@ jobs:
     runs-on: ${{ matrix.os[0] }}
     strategy:
       matrix:
-        os: [[macos-latest, bash], [ubuntu-latest, bash], [windows-latest, msys2]]
+        os: [[ubuntu-latest, bash]]
       fail-fast: false
     defaults:
      run:
       shell: ${{ matrix.os[1] }} {0}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
@@ -28,24 +28,6 @@ jobs:
         sudo apt-get update
         sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev
         echo "MSYSTEM=x64" >> $GITHUB_ENV
-
-    - name: Install Mac texinfo bison flex ucl
-      if: matrix.os[0] == 'macOS-latest'
-      run: |
-        brew update
-        brew install texinfo bison flex gnu-sed gsl gmp mpfr libmpc
-        echo "MSYSTEM=x64" >> $GITHUB_ENV
-
-    - name: Install MSYS2 texinfo bison flex
-      if: matrix.os[0] == 'windows-latest'
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW32
-        install: |
-          base-devel git make texinfo flex bison patch binutils mingw-w64-i686-gcc mpc-devel tar
-          mingw-w64-i686-cmake mingw-w64-i686-extra-cmake-modules mingw-w64-i686-make mingw-w64-i686-libogg
-        update: true
-        shell: msys2 {0}
 
     - name: Runs all the stages in the shell
       continue-on-error: true
@@ -66,7 +48,7 @@ jobs:
       run: |
         tar -zcvf ps2dev-${{matrix.os[0]}}.tar.gz ps2dev
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: ps2dev-${{matrix.os[0]}}-${{ steps.slug.outputs.sha8 }}
         path: ps2dev-${{matrix.os[0]}}.tar.gz
@@ -77,13 +59,13 @@ jobs:
       run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
 
     - name: Create pre-release
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/ps2dev-2023'
       uses: softprops/action-gh-release@v1
       with:
         files: ps2dev-${{matrix.os[0]}}.tar.gz
         prerelease: true
         name: "Development build"
-        tag_name: "latest"
+        tag_name: "2023-latest"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
