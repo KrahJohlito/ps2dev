@@ -10,7 +10,7 @@ REPO_URL="https://github.com/KrahJohlito/ps2sdk"
 REPO_FOLDER="ps2sdk"
 
 # Checking if a specific TAG has been selected, it is passed using parameter $1
-[  -z "$1" ] && REPO_REFERENCE="ps2sdk-2023" || REPO_REFERENCE=$1
+[  -z "$1" ] && REPO_REFERENCE="ps2sdk-20232" || REPO_REFERENCE=$1
 echo "Using repo reference $REPO_REFERENCE"
 
 if test ! -d "$REPO_FOLDER"; then
