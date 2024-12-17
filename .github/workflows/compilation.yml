@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os[0] }}
     strategy:
       matrix:
-        os: [[ubuntu-latest, bash]]
+        os: [[ubuntu-22.04, bash]]
       fail-fast: false
     defaults:
      run:
@@ -23,7 +23,7 @@ jobs:
         fetch-depth: 0
 
     - name: Install Ubuntu texinfo bison flex libucl-dev
-      if: matrix.os[0] == 'ubuntu-latest'
+      if: matrix.os[0] == 'ubuntu-22.04'
       run: |
         sudo apt-get update
         sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev
