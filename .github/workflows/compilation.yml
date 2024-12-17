@@ -59,13 +59,13 @@ jobs:
       run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
 
     - name: Create pre-release
-      if: github.ref == 'refs/heads/ps2dev-2023'
+      if: github.ref == 'refs/heads/ps2dev-2023-maxudma'
       uses: softprops/action-gh-release@v1
       with:
         files: ps2dev-${{matrix.os[0]}}.tar.gz
         prerelease: true
         name: "Development build"
-        tag_name: "2023-latest"
+        tag_name: "2023-maxudma"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
