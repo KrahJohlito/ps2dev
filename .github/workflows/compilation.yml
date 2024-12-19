@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os[0] }}
     strategy:
       matrix:
-        os: [[ubuntu-latest, bash]]
+        os: [[ubuntu-22.04, bash]]
       fail-fast: false
     defaults:
      run:
@@ -25,7 +25,7 @@ jobs:
         fetch-depth: 0
 
     - name: Install Ubuntu texinfo bison flex libucl-dev
-      if: matrix.os[0] == 'ubuntu-latest'
+      if: matrix.os[0] == 'ubuntu-22.04'
       run: |
         sudo apt-get update
         sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev
@@ -61,13 +61,13 @@ jobs:
       run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
 
     - name: Create pre-release
-      if: github.ref == 'refs/heads/ps2dev-2023'
+      if: github.ref == 'refs/heads/ps2dev-2023-test'
       uses: softprops/action-gh-release@v1
       with:
         files: ps2dev-${{matrix.os[0]}}.tar.gz
         prerelease: true
         name: "Development build"
-        tag_name: "2023-latest"
+        tag_name: "2023-test"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
