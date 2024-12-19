@@ -66,8 +66,13 @@ jobs:
       with:
         files: ps2dev-${{matrix.os[0]}}.tar.gz
         prerelease: true
-        name: "Development build"
-        tag_name: "2023-test"
+        name: "Development build for ps2dev-2023-test"
+        tag_name: "2023-test-${{ steps.slug.outputs.sha8 }}"
+        body: |
+          **Branch**: ps2dev-2023-test
+          **Commit SHA**: ${{ github.sha }}
+          **Build Date**: ${{ github.event.repository.updated_at }}
+          This is a development build based on the latest updates in the `ps2dev-2023-test` branch.
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
