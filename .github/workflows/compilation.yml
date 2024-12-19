@@ -20,6 +20,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
+        repository: KrahJohlito/ps2dev
+        ref: 2023-maxudma
         fetch-depth: 0
 
     - name: Install Ubuntu texinfo bison flex libucl-dev
